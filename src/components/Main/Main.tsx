@@ -28,14 +28,24 @@ const Main = () => {
     },
   ]);
 
-  const bodyInputRef = useRef<HTMLInputElement>(null);
+  // const bodyInputRef = useRef<HTMLInputElement>(null);
 
   const [title, setTitle] = useState<string>('');
+  const [body, setBody] = useState<string>('');
 
   const addNewPost = (e: EventDefProps) => {
     e.preventDefault();
-    console.log(title);
-    console.log(bodyInputRef.current?.value);
+    const newPost = {
+      id: Date.now(),
+      title,
+      body
+    }
+    setPosts([...posts, newPost]); //add newPost to the list
+    setTitle(''); //clear input
+    setBody(''); //clear input
+
+  
+    // console.log(bodyInputRef.current?.value);
     
   }
 
@@ -61,7 +71,9 @@ const Main = () => {
                   placeholder="Text post"
                   type="text"
                   className="form-control"
-                  ref={bodyInputRef}
+                  value={body}
+                  onChange={e => setBody(e.target.value)}
+                  // ref={bodyInputRef}
                 />
               </div>
               <MyButton type="submit" className="btn btn-success" clickHandler={addNewPost}>

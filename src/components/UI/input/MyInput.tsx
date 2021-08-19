@@ -6,4 +6,4 @@ const MyInput = React.forwardRef(({placeholder, ...props}: MyInputProps, ref: Re
         <input {...props} ref={ref} placeholder={placeholder}/>
     )
 })
-export default MyInput
+export default MyInput;

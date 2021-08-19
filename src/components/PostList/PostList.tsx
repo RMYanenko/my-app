@@ -11,8 +11,8 @@ const PostList = ({ posts, title }: IProps): JSX.Element => {
   return (
     <div>
       <h1 className="title">{title}</h1>
-      {posts.map((post: PostItemInterface) => (
-        <PostItem key={post.id} {...post} />
+      {posts.map((post: PostItemInterface, index: number) => (
+        <PostItem number={index + 1} key={post.id} {...post} />
       ))}
     </div>
   );
