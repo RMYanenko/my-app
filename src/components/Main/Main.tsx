@@ -1,4 +1,4 @@
-import {useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { PostItemInterface } from "../../interfaces/PostItemInterface";
 import PostList from "../PostList/PostList";
 import MyButton from "../UI/button/MyButton";
@@ -30,24 +30,24 @@ const Main = () => {
 
   // const bodyInputRef = useRef<HTMLInputElement>(null);
 
-  const [title, setTitle] = useState<string>('');
-  const [body, setBody] = useState<string>('');
+  // const [title, setTitle] = useState<string>('');
+  // const [body, setBody] = useState<string>('');
+
+  const [post, setPost] = useState({
+    title: "",
+    body: "",
+  });
 
   const addNewPost = (e: EventDefProps) => {
     e.preventDefault();
-    const newPost = {
-      id: Date.now(),
-      title,
-      body
-    }
-    setPosts([...posts, newPost]); //add newPost to the list
-    setTitle(''); //clear input
-    setBody(''); //clear input
+    setPosts([ ...posts, {...post, id: Date.now()}]); //add newPost to the list
+    // setPosts([...posts, newPost]); //add newPost to the list
+    setPost({title: "",  body: ""});
+    // setTitle(''); //clear input
+    // setBody(''); //clear input
 
-  
     // console.log(bodyInputRef.current?.value);
-    
-  }
+  };
 
   return (
     <main className="main flex-fill">
@@ -61,8 +61,8 @@ const Main = () => {
                   placeholder="Title post"
                   type="text"
                   className="form-control"
-                  value={title}
-                  onChange={e => setTitle(e.target.value)}
+                  value={post.title}
+                  onChange={(e) => setPost({ ...post, title: e.target.value })}
                 />
               </div>
               <div className="mb-3">
@@ -71,12 +71,16 @@ const Main = () => {
                   placeholder="Text post"
                   type="text"
                   className="form-control"
-                  value={body}
-                  onChange={e => setBody(e.target.value)}
+                  value={post.body}
+                  onChange={(e) => setPost({ ...post, body: e.target.value })}
                   // ref={bodyInputRef}
                 />
               </div>
-              <MyButton type="submit" className="btn btn-success" clickHandler={addNewPost}>
+              <MyButton
+                type="submit"
+                className="btn btn-success"
+                clickHandler={addNewPost}
+              >
                 Add post
               </MyButton>
             </form>
