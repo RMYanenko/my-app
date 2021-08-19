@@ -1,9 +1,9 @@
-import React from 'react'
-import { MyInputProps } from './MyInput.props'
+import React, { Ref } from 'react'
+import { MyInputProps} from './MyInput.props';
 
-const MyInput = ({placeholder, ...props}: MyInputProps) => {
+const MyInput = React.forwardRef(({placeholder, ...props}: MyInputProps, ref: Ref<HTMLInputElement>):JSX.Element => {
     return (
-        <input {...props} placeholder={placeholder}/>
+        <input {...props} ref={ref} placeholder={placeholder}/>
     )
-}
+})
 export default MyInput

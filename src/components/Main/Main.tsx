@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import {useRef, useState } from "react";
 import { PostItemInterface } from "../../interfaces/PostItemInterface";
 import PostList from "../PostList/PostList";
 import MyButton from "../UI/button/MyButton";
@@ -28,11 +28,14 @@ const Main = () => {
     },
   ]);
 
+  const bodyInputRef = useRef<HTMLInputElement>(null);
+
   const [title, setTitle] = useState<string>('');
 
   const addNewPost = (e: EventDefProps) => {
     e.preventDefault();
     console.log(title);
+    console.log(bodyInputRef.current?.value);
     
   }
 
@@ -43,6 +46,7 @@ const Main = () => {
           <div className="col-6">
             <form>
               <div className="mb-3">
+                {/* Управляємий компонент */}
                 <MyInput
                   placeholder="Title post"
                   type="text"
@@ -52,10 +56,12 @@ const Main = () => {
                 />
               </div>
               <div className="mb-3">
+                {/* Неуправляємий компонент */}
                 <MyInput
                   placeholder="Text post"
                   type="text"
                   className="form-control"
+                  ref={bodyInputRef}
                 />
               </div>
               <MyButton type="submit" className="btn btn-success" clickHandler={addNewPost}>
