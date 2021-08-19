@@ -5,6 +5,10 @@ import MyButton from "../UI/button/MyButton";
 import "./Main.scss";
 import MyInput from "./../UI/input/MyInput";
 
+interface EventDefProps {
+  preventDefault: () => void;
+}
+
 const Main = () => {
   const [posts, setPosts] = useState<PostItemInterface[]>([
     {
@@ -24,9 +28,9 @@ const Main = () => {
     },
   ]);
 
-  const [title, setTitle] = useState<string>('sswsws');
+  const [title, setTitle] = useState<string>('');
 
-  const addNewPost = (e:ChangeEvent<HTMLInputElement>) => {
+  const addNewPost = (e: EventDefProps) => {
     e.preventDefault();
     console.log(title);
     
@@ -54,7 +58,7 @@ const Main = () => {
                   className="form-control"
                 />
               </div>
-              <MyButton className="btn btn-success" onClick={() => addNewPost}>
+              <MyButton type="submit" className="btn btn-success" clickHandler={addNewPost}>
                 Add post
               </MyButton>
             </form>
