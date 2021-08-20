@@ -1,13 +1,9 @@
-import { useRef, useState } from "react";
 import { PostItemInterface } from "../../interfaces/PostItemInterface";
 import PostList from "../PostList/PostList";
-import MyButton from "../UI/button/MyButton";
 import "./Main.scss";
-import MyInput from "./../UI/input/MyInput";
+import PostForm from './../PostForm/PostForm';
+import { useState } from "react";
 
-interface EventDefProps {
-  preventDefault: () => void;
-}
 
 const Main = () => {
   const [posts, setPosts] = useState<PostItemInterface[]>([
@@ -28,63 +24,20 @@ const Main = () => {
     },
   ]);
 
-  // const bodyInputRef = useRef<HTMLInputElement>(null);
+  const createPost = (newPost: PostItemInterface) => {
+    setPosts([...posts, newPost]);
+  }
 
-  // const [title, setTitle] = useState<string>('');
-  // const [body, setBody] = useState<string>('');
-
-  const [post, setPost] = useState({
-    title: "",
-    body: "",
-  });
-
-  const addNewPost = (e: EventDefProps) => {
-    e.preventDefault();
-    setPosts([ ...posts, {...post, id: Date.now()}]); //add newPost to the list
-    // setPosts([...posts, newPost]); //add newPost to the list
-    setPost({title: "",  body: ""});
-    // setTitle(''); //clear input
-    // setBody(''); //clear input
-
-    // console.log(bodyInputRef.current?.value);
-  };
+  // отримуємо пост з дочернього елемента
+  const removePost = (post: PostItemInterface) => {
+    setPosts(posts.filter(p => p.id !== post.id))
+  }
 
   return (
     <main className="main flex-fill">
       <div className="container">
         <div className="row">
-          <div className="col-6">
-            <form>
-              <div className="mb-3">
-                {/* Управляємий компонент */}
-                <MyInput
-                  placeholder="Title post"
-                  type="text"
-                  className="form-control"
-                  value={post.title}
-                  onChange={(e) => setPost({ ...post, title: e.target.value })}
-                />
-              </div>
-              <div className="mb-3">
-                {/* Неуправляємий компонент */}
-                <MyInput
-                  placeholder="Text post"
-                  type="text"
-                  className="form-control"
-                  value={post.body}
-                  onChange={(e) => setPost({ ...post, body: e.target.value })}
-                  // ref={bodyInputRef}
-                />
-              </div>
-              <MyButton
-                type="submit"
-                className="btn btn-success"
-                clickHandler={addNewPost}
-              >
-                Add post
-              </MyButton>
-            </form>
-          </div>
+          <PostForm create={createPost} />
         </div>
       </div>
       <div className="">
